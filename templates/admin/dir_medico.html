@@ -1,0 +1,95 @@
+{% include 'admin/head.html' %}
+{% include 'admin/nav.html' %}
+
+<!-- DOBLE COLUMNA-->
+<div class="row justify-content-center align-items-top g-2 mt-5">
+
+<!---- COLUMNA IZQUIERDA ----->
+    <div class="col-12 col-sm-4 card" style="padding: 1.5em;">
+
+        <!---- INICIO FORM IMPORTANTE PASO 2* APP.PY----->
+        <form action="/admin/dir_medico/new" method="POST" enctype="multipart/form-data">
+
+        <H4><b>CARGA DE DATOS</b></H4><br>
+        <div class="mb-3 row">
+
+            <div> <!---- DATO TIPO TXT----->
+                <label for="dir_med_nombre" class="col-form-label">Ingrese nombre</label>                
+                <input type="text" class="form-control" name="dir_med_nombre" id="dir_med_nombre" placeholder="Escriba aquí">
+            </div>
+        </div>
+        <div class="mb-3 row">
+
+            <div>
+                <label for="dir_med_especialidad" class="col-form-label">Ingrese Especialidad</label>                
+                <input type="text" class="form-control" name="dir_med_especialidad" id="dir_med_especialidad" placeholder="Escriba aquí">
+            </div>
+        </div>
+        <div class="mb-3 row">
+
+            <div> <!---- DATO TIPO FILE, SE CAMBIA PARA PODER ENVIAR Y RECEPCIONAR COMO FILE----->
+                <label for="dir_med_imagen" class="col-form-label">Indique imagen</label>
+                <input type="file" class="form-control" name="dir_med_imagen" id="dir_med_imagen" placeholder="Escriba aquí">
+            </div>
+        </div>
+        <div class="mb-3 row">
+
+            <div>
+                <label for="dir_med_descarga" class="col-form-label">Url botón</label>                
+                <input type="text" class="form-control" name="dir_med_descarga" id="dir_med_descarga" placeholder="Escriba aquí">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="offset-sm-4 col-sm-8">
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+            </div>
+        </div>
+        </form>
+        <!---- CIERRA FORM ----->
+
+    </div>
+
+    <!---- COLUMNA DERECHA ----->
+    <div class="col-8" style="padding-left: 2em;">
+
+        <H4><b>DATOS ACTUALES   </b></H4><br>
+        <div class="mb-3 table-responsive card">
+            <table class="table table-primary">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Especialidad</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Botón Descarga</th>
+                        <th scope="col">Opciones</th>                                                
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td>R1C2</td>
+                        <td>R1C3</td>
+                        <td>R1C2</td>
+                        <td>R1C3</td>
+                        <td>R1C2</td>
+                        <td>R1C3</td>                                                
+                    </tr>
+                    <tr class="">
+                        <td>R1C2</td>
+                        <td>R1C3</td>
+                        <td>R1C2</td>
+                        <td>R1C3</td>
+                        <td>R1C2</td>
+                        <td>R1C3</td> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+
+    </div>
+</div>
+
+
+
+{% include 'admin/footer.html' %}
