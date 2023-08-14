@@ -1,13 +1,12 @@
 #************** IMPORTAMOS *************************************************************#
-from flask import Flask                                                                                    #* PASO 1 *#
-from flask import render_template                                                                          #* PASO 2 *#
-from flask import request, redirect                                                                        #* PASO 3 *#
-from flaskext.mysql import MySQL                                                                           #* PASO 4 *#
-from dotenv import load_dotenv                                                                             #* PASO 4 * FALTA SOLUCIONAR EL ACCESO A BD EN ADELANTE#
-import os
+from flask import Flask                                                                                    #* FLASK
+from flask import render_template, redirect                                                                #* SITIO NORMAL
+from flask import request                                                                                  #* BASE DE DATOS
+from flaskext.mysql import MySQL                                                                           #* BASE DE DATOS
+from dotenv import load_dotenv                                                                             #* VARIABLES DE ENTORNO
+#import os                                                                                                 #* ...
 #from flask import session
 #from datetime import datetime
-#import os
 #from flask import send_from_directorys
 
 
@@ -15,7 +14,8 @@ import os
 app = Flask(__name__)
 
 #************** CONFIG BD ************************************************************#
-#PASO 4 --> CONECTAR BASE DE DATOS
+
+#CONECTAR BASE DE DATOS CON FORMULARIOS DE REGISTRO
 
 mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
@@ -27,6 +27,7 @@ mysql.init_app(app)
 
 #************** SITE *******************************************************************#
 
+#DEFINIR RUTA NORMALES DEL SITIO Y QUE PUEDAN VERSE
 @app.route('/')
 def index():
     return render_template('site/index.html')
@@ -37,7 +38,8 @@ def dir_medico():
 
 #************** ADMIN *******************************************************************#
 
-#PASO 1 --> PARA INICIAR LA APP, RUTAS Y PRUEBAS#
+
+#DEFINIR RUTA NORMALES DEL SITIO Y QUE PUEDAN VERSE
 @app.route('/admin')
 def login():
     return render_template('admin/index.html')
@@ -46,28 +48,38 @@ def login():
 def admin_login():
     return render_template('/admin/login.html')
 
+
+
+#AQUÍ SE LISTAN TODOS LOS DATOS DE LA BD QUE HE GUARDADO
 @app.route('/admin/dir_medico')
 def admin_dir_medico():
-    #conexion = mysql.connect()   #--> Conex real, usaré más abajo
-    #print(conexion)             --> Así probé inicialmente para ver si conectaba
-    return render_template('/admin/dir_medico.html')
+
+    conexion = mysql.connect()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT * FROM doc_registro")
+    registro=cursor.fetchall()
+    conexion.commit()
+    #print(conexion)             #--> Así probé inicialmente para ver si conectaba
+    print(registro)
+
+    return render_template('/admin/dir_medico.html', registro=registro)
 
 
 
-#REGISTRO DE DATA
+#CAPTACIÓN Y REGISTRO DE DATA / FORMULARIO / BD
 @app.route('/admin/dir_medico/new', methods=['POST'])
 def admin_dir_medico_new():
     #print(request.form['dir_med_nombre']) --> Así probé inicialmente
 
-    nombre = request.form['dir_med_nombre']                                                                                           #* PASO 4 *
-    especialidad = request.form['dir_med_especialidad']
-    imagen = request.files['dir_med_imagen']
-    link = request.form['dir_med_descarga']
+    doc_nombre = request.form['dir_med_nombre']
+    doc_especialidad = request.form['dir_med_especialidad']
+    doc_imagen = request.files['dir_med_imagen']
+    doc_link = request.form['dir_med_descarga']
 
-    sql = "INSERT INTO doc_registro (id,nombre,especialidad,imagen,boton) VALUES (NULL,%s,%s,%s,%s);"                                  #* PASO 4 *
-    values = (nombre, especialidad, imagen, link)
+    sql = "INSERT INTO doc_registro (id,nombre,especialidad,imagen,boton) VALUES (NULL,%s,%s,%s,%s);"
+    values = (doc_nombre, doc_especialidad, doc_imagen, doc_link)
 
-    conexion = mysql.connect()                                                                                                         #* PASO 4 *
+    conexion = mysql.connect()
     cursor = conexion.cursor()
     cursor.execute(sql,values)
     conexion.commit()
@@ -75,6 +87,21 @@ def admin_dir_medico_new():
     #print(nombre,especialidad,imagen,link) #--> Así pruebo si pasa los datos
     return redirect ('/admin/dir_medico')
 
+
+
+#ELIMINO REGISTRO DE BD
+@app.route('/admin/dir_medico/delete', methods=['POST'])
+def admin_dir_medico_delete():
+
+    doc_id = request.form['dir_med_id']
+    print(doc_id)
+
+    conexion = mysql.connect()
+    cursor = conexion.cursor()
+    cursor.execute("DELETE FROM doc_registro WHERE id=%s",(doc_id))
+    conexion.commit()
+
+    return redirect ('/admin/dir_medico')
 
 
 #**************** Instanciamos **********************************************************#

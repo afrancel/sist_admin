@@ -66,22 +66,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="">
-                        <td>R1C2</td>
-                        <td>R1C3</td>
-                        <td>R1C2</td>
-                        <td>R1C3</td>
-                        <td>R1C2</td>
-                        <td>R1C3</td>                                                
+                    {% for row in registro %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td>
+                            <form action="/admin/dir_medico/delete" method="POST">
+                            <input value="{{ row[0] }}" type="hidden" id="dir_med_id" name="dir_med_id">
+                                <button type="submit" class="btn btn-primary">Borrar</button>
+                            </form>
+
+                        </td>                                                
                     </tr>
-                    <tr class="">
-                        <td>R1C2</td>
-                        <td>R1C3</td>
-                        <td>R1C2</td>
-                        <td>R1C3</td>
-                        <td>R1C2</td>
-                        <td>R1C3</td> 
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
