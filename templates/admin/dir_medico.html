@@ -1,6 +1,14 @@
 {% include 'admin/head.html' %}
 {% include 'admin/nav.html' %}
 
+
+<h1>Directorio Médico</h1>
+{% if session['Usuario'] %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Usuario {{ session['Usuario'] }}</strong>
+    </div>
+{% endif %}
+
 <!-- DOBLE COLUMNA-->
 <div class="row justify-content-center align-items-top g-2 mt-5">
 
@@ -71,8 +79,8 @@
                         <td>{{ row[0] }}</td>
                         <td>{{ row[1] }}</td>
                         <td>{{ row[2] }}</td>
-                        <td>{{ row[3] }}</td>
-                        <td>{{ row[4] }}</td>
+                        <td><img style="width: 200px; height: auto;" src="/imgs/{{ row[3] }}" alt="Directio Médico"></td>
+                        <td><a target="_blank" href="https://www.google.com/search?q={{ row[4] }}">Link</a></td>
                         <td>
                             <form action="/admin/dir_medico/delete" method="POST">
                             <input value="{{ row[0] }}" type="hidden" id="dir_med_id" name="dir_med_id">

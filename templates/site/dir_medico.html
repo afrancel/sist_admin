@@ -2,47 +2,30 @@
 {% include 'site/nav.html' %}
 
 <div class="row justify-content-center align-items-center g-2">
-    <div class="col">
-        <div class="card">
-            <img class="card-img-top" src="https://udv.edu.gt/wp-content/uploads/2019/11/New-Project-90.jpg" alt="Title">
-            <div class="card-body">
-                <h4 class="card-title">Title</h4>
-                <p class="card-text">Text</p>
-                <a name="" id="" class="btn btn-primary" href="#" role="button">Descargar</a>
-                
+
+    <h1>Directorio Médico</h1>
+    {% if registro %}
+
+        {% for row in registro %}
+        <div class="col-md-3">
+            <div class="card">
+                <img class="card-img-top" src="/imgs/{{ row[3] }}" alt="Title">
+                <div class="card-body">
+                    <h4 class="card-title">{{ row[1] }}<br>{{ row[2] }}</h4>
+                    <p class="card-text">{{ row[4] }}</p>
+                    <a name="" id="" class="btn btn-primary" href="{{ row[4] }}" role="button">Descargar</a>
+                    
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <img class="card-img-top" src="https://udv.edu.gt/wp-content/uploads/2019/11/New-Project-90.jpg" alt="Title">
-            <div class="card-body">
-                <h4 class="card-title">Title</h4>
-                <p class="card-text">Text</p>
-                <a name="" id="" class="btn btn-primary" href="#" role="button">Descargar</a>                
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <img class="card-img-top" src="https://udv.edu.gt/wp-content/uploads/2019/11/New-Project-90.jpg" alt="Title">
-            <div class="card-body">
-                <h4 class="card-title">Title</h4>
-                <p class="card-text">Text</p>
-                <a name="" id="" class="btn btn-primary" href="#" role="button">Descargar</a>                
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <img class="card-img-top" src="https://udv.edu.gt/wp-content/uploads/2019/11/New-Project-90.jpg" alt="Title">
-            <div class="card-body">
-                <h4 class="card-title">Title</h4>
-                <p class="card-text">Text</p>
-                <a name="" id="" class="btn btn-primary" href="#" role="button">Descargar</a>              
-            </div>
-        </div>
-    </div>          
+        {% endfor %}
+
+    {%else%}
+    <div class="col-md-12">No hay ningún dato por ahora</div>
+
+    {% endif %}
+
+         
 </div>
 
 {% include 'site/footer.html' %}

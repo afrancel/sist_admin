@@ -1,5 +1,11 @@
 {% include 'admin/head.html' %}
 {% include 'admin/nav.html' %}
-prueba
+
+<h1>Bienvenido al administrador</h1>
+{% if session['Usuario'] %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Usuario {{ session['Usuario'] }}</strong>
+    </div>
+{% endif %}
 
 {% include 'admin/footer.html' %}
